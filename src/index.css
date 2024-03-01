@@ -1,12 +1,26 @@
 :root {
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+
+  --text-color: #fff;
+  --bg-color: #000;
+
+  color: var(--text-color);
+  background-color: var(--bg-color);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+:root.dark {
+  --text-color: #fff;
+  --bg-color: #000;
+}
+
+:root.light {
+  --text-color: #000;
+  --bg-color: #fff;
 }
 
 html {
@@ -28,8 +42,6 @@ body {
   place-content: center;
   width: 100%;
   min-height: 100vh;
-  /* background-color: #0f0f0f;
-  color: #21aadd; */
 }
 
 .main {
@@ -45,7 +57,8 @@ body {
 .buttonTheme {
   padding: .8rem 1rem;
   border-radius: 10px;
-  border: 2px solid #000;
+  border: 2px solid #555;
+  color: var(--text-color);
   background-color: transparent;
   font-size: 1.4rem;
   cursor: pointer;
@@ -54,7 +67,7 @@ body {
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    --text-color: #000;
+    --bg-color: #fff;
   }
 }
