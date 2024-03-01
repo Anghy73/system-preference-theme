@@ -1,57 +1,34 @@
-import { useEffect } from "react"
+import { useEffect } from 'react'
 
-function App() {
-
+function App () {
   useEffect(() => {
-    handleClickScheme(window.localStorage.getItem('theme'))
+    if (window.localStorage.theme === 'dark' || (!('theme' in window.localStorage) &&
+    window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
   }, [])
 
-  const handleClickLight = () => {
-    const newTheme = 'light'
-    window.localStorage.setItem('theme', newTheme)
-    handleClickScheme(newTheme)
+  const handleClickDark = () => {
+    document.documentElement.classList.add('dark')
+    window.localStorage.theme = 'dark'
   }
 
-  const handleClickDark = () => {
-    const newTheme = 'dark'
-    window.localStorage.setItem('theme', newTheme)
-    handleClickScheme(newTheme)
+  const handleClickLight = () => {
+    document.documentElement.classList.remove('dark')
+    window.localStorage.theme = 'light'
   }
 
   const handleClickSystem = () => {
-    const newTheme = ''
-    window.localStorage.setItem('theme', '')
-    handleClickScheme(newTheme)
-  }
-
-  const handleClickScheme = (theme) => {
-
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark')
-      document.documentElement.classList.remove('os-default')
-    } else {
-      document.documentElement.classList.remove('dark')
-    }
-
-    if (theme === 'light') {
-      document.documentElement.classList.add('light')
-      document.documentElement.classList.remove('os-default')
-    } else {
-      document.documentElement.classList.remove('light')
-    }
-
-    if (theme === '' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      document.documentElement.classList.add('os-default')
-      document.documentElement.classList.remove('dark')
-      document.documentElement.classList.remove('light')
-    }
+    window.localStorage.removeItem('theme')
   }
 
   return (
-    <main className="main">
-      <button className="buttonTheme" onClick={handleClickDark}>Theme Dark</button>
-      <button className="buttonTheme" onClick={handleClickLight}>Theme Light</button>
-      <button className="buttonTheme" onClick={handleClickSystem}>Theme System</button>
+    <main className='w-screen h-screen bg-slate-300 text-stone-800  dark:bg-gray-900 dark:text-sky-400 flex flex-col justify-center items-center gap-2'>
+      <button className='w-full max-w-52 border-2 rounded dark:border-white border-black px-2 py-1' onClick={handleClickDark}>Theme Dark</button>
+      <button className='w-full max-w-52 border-2 rounded dark:border-white border-black px-2 py-1' onClick={handleClickLight}>Theme Light</button>
+      <button className='w-full max-w-52 border-2 rounded dark:border-white border-black px-2 py-1' onClick={handleClickSystem}>Theme System</button>
     </main>
   )
 }
