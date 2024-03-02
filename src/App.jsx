@@ -1,6 +1,8 @@
 import { useEffect } from 'react'
 
 function App () {
+  const darkQuery = window.matchMedia('(prefers-color-scheme: dark)')
+
   useEffect(() => {
     if (window.localStorage.theme === 'dark' || (!('theme' in window.localStorage) &&
     window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -9,6 +11,14 @@ function App () {
       document.documentElement.classList.remove('dark')
     }
   }, [])
+
+  darkQuery.addEventListener('change', () => {
+    if (darkQuery.matches) {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+  })
 
   const handleClickDark = () => {
     document.documentElement.classList.add('dark')
@@ -22,6 +32,13 @@ function App () {
 
   const handleClickSystem = () => {
     window.localStorage.removeItem('theme')
+
+    if (window.localStorage.theme === 'dark' || (!('theme' in window.localStorage) && darkQuery.matches)) {
+      document.documentElement.classList.add('dark')
+      window.localStorage.theme = 'dark'
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
   }
 
   return (
